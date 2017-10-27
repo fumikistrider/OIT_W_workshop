@@ -23,7 +23,7 @@ class Particle {
     
     if(location.y > height - 50){ location.y = height - 50; velocity.x = 0; }
     
-    if( mousePressed && location.y > (height /2)){
+    if( serialVal == 1 && location.y > (height /2)){
       velocity = new PVector( random(-2,2),random(-5.0,0) );
     }
     

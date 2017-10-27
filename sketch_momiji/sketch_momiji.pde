@@ -14,7 +14,7 @@ static final int INTERVAL_LEAVES = 10;
 // Variables
 boolean bSpout = false;
 Spout   spout;
-boolean bSerial = true;
+boolean bSerial = false;
 Serial  serialPort;
 int     serialVal;
 PImage  bgImage;
@@ -22,6 +22,10 @@ PImage  bgImage;
 ArrayList<MomijiParticle> particles;
 ArrayList<PImage> images;
 
+
+//---------------------------------------
+//  setup
+//
 void setup() {
 
   size(1024,640, P3D);
@@ -52,8 +56,12 @@ void setup() {
 
 }
 
-void draw() {
 
+//---------------------------------------
+// draw
+//
+void draw() {
+  
   colorMode(HSB,10000,100,100);
   background(frameCount % 10000, 40, 80);
   imageMode(CORNER);
@@ -61,12 +69,22 @@ void draw() {
   colorMode(RGB,100,100,100, LIFESPAN);
 
 
+  // 葉っぱの自動追加
   if( frameCount % INTERVAL_LEAVES == 0)
     particles.add(new MomijiParticle(new PVector(random(width),0)));
 
 
-  Iterator<MomijiParticle> it = particles.iterator();
+  // Arduinoの値を読み込み
+  if( bSerial && serialPort.available() > 0 ){
+    serialVal = serialPort.read();    
+  }else{
+    serialVal = 0;
+  }
+  // デバッグ
+  if( mousePressed )   serialVal = 1;
 
+  // パーティクル更新
+  Iterator<MomijiParticle> it = particles.iterator();
   while( it.hasNext() ){
 
     MomijiParticle p = it.next();
@@ -87,6 +105,9 @@ void draw() {
 }
 
 
+//---------------------------------------
+// Event
+//
 void mousePressed(){
 
   for(int i = 0; i < NUM_LEAVES; i++){
