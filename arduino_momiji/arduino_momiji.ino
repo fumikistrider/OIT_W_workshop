@@ -1,28 +1,48 @@
-int gpioVal = 0;
+int lastVal = 0;
 
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
 
-  pinMode(3, INPUT);
+  pinMode(2, INPUT);
+  pinMode(4, INPUT);
+  pinMode(6, INPUT);
+  pinMode(13, OUTPUT);
 
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  int receivedVal = digitalRead(3);
 
-  if( receivedVal != gpioVal ){
-    // 値が変化した
-    if( receivedVal == 1 ){
-      // GPIOタグがOFFからONになった時点で PCに 1 を送る
-      Serial.write(1);      
+  int val2 = digitalRead(2);
+  int val4 = digitalRead(4);
+  int val6 = digitalRead(6);
+  delay(1);
+
+    if( val6 == 1 ){
+      Serial.write(1);
+      delay(1000);
     }else{
-      // それ以外は 0 を送る
       Serial.write(0);
     }
-    // 値を更新
-    gpioVal = receivedVal;    
-  }
 
+/*
+  if( lastVal == 0 ){
+
+    if( val6 == 1 ){
+      Serial.println("BANG");
+      lastVal = 1;
+    }else{
+      Serial.println(0);
+    }
+      delay(1);
+  }else{
+    if( val6 == 0 ){
+      lastVal = 0;
+    }
+  }
+*/
+  digitalWrite(13,HIGH);
+  delay(100);
+    
 }
+

@@ -14,7 +14,7 @@ static final int INTERVAL_LEAVES = 10;
 // Variables
 boolean bSpout = false;
 Spout   spout;
-boolean bSerial = false;
+boolean bSerial = true;
 Serial  serialPort;
 int     serialVal;
 PImage  bgImage;
@@ -39,8 +39,8 @@ void setup() {
 
   if(bSerial){
     println(Serial.list());
-    //String portName = Serial.list()[1];
-    //serialPort = new Serial(this, portName, 9600);
+    String portName = Serial.list()[0];
+    serialPort = new Serial(this, portName, 9600);
   }
   serialVal = 0;
 
@@ -80,6 +80,12 @@ void draw() {
   }else{
     serialVal = 0;
   }
+  println(frameCount + " : " + serialVal);
+
+  if( serialVal == 1){
+    addParticle();
+  }
+
   // デバッグ
   if( mousePressed )   serialVal = 1;
 
@@ -114,4 +120,12 @@ void mousePressed(){
      particles.add(new MomijiParticle(new PVector(mouseX,mouseY)));
   }
 
+}
+
+void addParticle(){
+  int rx = (int)random(width);
+  int ry = (int)random(height/2);
+  for(int i = 0; i < NUM_LEAVES; i++){
+     particles.add(new MomijiParticle(new PVector(rx,ry)));
+  }
 }
