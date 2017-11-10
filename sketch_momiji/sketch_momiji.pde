@@ -14,10 +14,12 @@ static final int INTERVAL_LEAVES = 10;
 // Variables
 boolean bSpout = false;
 Spout   spout;
-boolean bSerial = true;
+boolean bSerial = false;
 Serial  serialPort;
 int     serialVal;
 PImage  bgImage;
+PImage  treeLeft;
+PImage  treeRight;
 
 ArrayList<MomijiParticle> particles;
 ArrayList<PImage> images;
@@ -44,7 +46,9 @@ void setup() {
   }
   serialVal = 0;
 
-  bgImage = loadImage("back.png");
+  bgImage = loadImage("ground.png");
+  treeLeft = loadImage("tree_left.png");
+  treeRight = loadImage("tree_right.png");
 
   particles = new ArrayList<MomijiParticle>();
   images = new ArrayList<PImage>();
@@ -66,6 +70,8 @@ void draw() {
   background(frameCount % 10000, 40, 80);
   imageMode(CORNER);
   image(bgImage,0,0,1024,640);
+  image(treeLeft, -120,0,640,640);
+  image(treeRight, 555 ,0,640,640);
   colorMode(RGB,100,100,100, LIFESPAN);
 
 
@@ -80,7 +86,7 @@ void draw() {
   }else{
     serialVal = 0;
   }
-  println(frameCount + " : " + serialVal);
+  //println(frameCount + " : " + serialVal);
 
   if( serialVal == 1){
     addParticle();
@@ -104,6 +110,10 @@ void draw() {
     }
 
   }
+
+  imageMode(CORNER);
+  image(treeLeft, -120,0,640,640);
+  image(treeRight, 555 ,0,640,640);
 
   if(bSpout)
     spout.sendTexture();
