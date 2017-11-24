@@ -1,3 +1,6 @@
+import netP5.*;
+import oscP5.*;
+
 import java.util.*;
 import processing.serial.*;
 import spout.*;
@@ -24,6 +27,10 @@ PImage  treeRight;
 ArrayList<MomijiParticle> particles;
 ArrayList<PImage> images;
 
+int intervalCount = 0;
+
+OscP5 oscP5;
+NetAddress myRemoteLocation;
 
 //---------------------------------------
 //  setup
@@ -46,6 +53,9 @@ void setup() {
   }
   serialVal = 0;
 
+  oscP5 = new OscP5(this,12340);
+  myRemoteLocation = new NetAddress("127.0.0.1",12345);
+
   bgImage = loadImage("ground.png");
   treeLeft = loadImage("tree_left.png");
   treeRight = loadImage("tree_right.png");
@@ -65,7 +75,7 @@ void setup() {
 // draw
 //
 void draw() {
-  
+
   colorMode(HSB,10000,100,100);
   background(frameCount % 10000, 40, 80);
   imageMode(CORNER);
@@ -82,7 +92,7 @@ void draw() {
 
   // Arduinoの値を読み込み
   if( bSerial && serialPort.available() > 0 ){
-    serialVal = serialPort.read();    
+    serialVal = serialPort.read();
   }else{
     serialVal = 0;
   }
