@@ -17,7 +17,7 @@ static final int PARTICLE_NUM = 5;
 // Variables
 boolean bSpout = true;
 Spout   spout;
-boolean bSerial = true;
+boolean bSerial = false;
 Serial  serialPort;
 int     serialVal;
 PImage  bgImage;
@@ -27,6 +27,7 @@ PImage  treeRight;
 ArrayList<MomijiParticle> particles;
 ArrayList<PImage> images;
 
+Snowman snowman;
 
 //---------------------------------------
 //  setup
@@ -55,6 +56,7 @@ void setup() {
 
   particles = new ArrayList<MomijiParticle>();
   images = new ArrayList<PImage>();
+  snowman = new Snowman();
 
   for (int i = 0; i < PARTICLE_NUM; i++ ) {
     PImage img = loadImage( "s" + i + ".png");
