@@ -17,17 +17,18 @@ static final int PARTICLE_NUM = 5;
 // Variables
 boolean bSpout = true;
 Spout   spout;
-boolean bSerial = false;
+boolean bSerial = true;
 Serial  serialPort;
 int     serialVal;
 PImage  bgImage;
-PImage  treeLeft;
-PImage  treeRight;
+PImage  treeLeft[];
+PImage  treeRight[];
 
 ArrayList<MomijiParticle> particles;
 ArrayList<PImage> images;
 
 Snowman snowman;
+int blink;
 
 //---------------------------------------
 //  setup
@@ -51,12 +52,20 @@ void setup() {
   serialVal = 0;
 
   bgImage = loadImage("ground.png");
-  treeLeft = loadImage("tree_left.png");
-  treeRight = loadImage("tree_right.png");
+  treeLeft = new PImage[3];
+  treeRight = new PImage[3];
+
+  treeLeft[0] = loadImage("tree_left_0.png");
+  treeRight[0] = loadImage("tree_right_0.png");
+  treeLeft[1] = loadImage("tree_left_1.png");
+  treeRight[1] = loadImage("tree_right_1.png");
+  treeLeft[2] = loadImage("tree_left_2.png");
+  treeRight[2] = loadImage("tree_right_2.png");
 
   particles = new ArrayList<MomijiParticle>();
   images = new ArrayList<PImage>();
   snowman = new Snowman();
+  blink = 0;
 
   for (int i = 0; i < PARTICLE_NUM; i++ ) {
     PImage img = loadImage( "s" + i + ".png");
@@ -99,6 +108,14 @@ void draw() {
   // デバッグ
   if ( mousePressed )   serialVal = 1;
 
+  if( serialVal == 2){
+    snowman.nextState();
+  }
+
+  if( serialVal == 3){
+    blink = 1;
+  }
+
   // パーティクル更新
   Iterator<MomijiParticle> it = particles.iterator();
   while ( it.hasNext() ) {
@@ -115,8 +132,19 @@ void draw() {
   }
 
   imageMode(CORNER);
-  image(treeLeft, -128, 0);
-  image(treeRight, width - treeRight.width +180, 0);
+
+  int treeindex = 0;
+  if( blink > 0 && 0 != (frameCount % 2) ){
+    treeindex = blink % 3;
+    blink++;
+    if(blink >= 100){
+      blink = 0;
+    }
+  }
+  image(treeLeft[treeindex], 0, 0);
+  image(treeRight[treeindex], width - treeRight[treeindex].width, 0);
+
+  snowman.display();
 
   if (bSpout)
     spout.sendTexture();
@@ -130,6 +158,14 @@ void mousePressed() {
 
   for (int i = 0; i < NUM_LEAVES; i++) {
     particles.add(new MomijiParticle(new PVector(mouseX, mouseY)));
+  }
+}
+
+void keyPressed(){
+  if(key == ' ')
+    snowman.nextState();
+  if(key == 't'){
+    blink++;
   }
 }
 
