@@ -14,7 +14,7 @@ static final int NUM_LEAVES = 100;
 // 葉っぱが自動的に増えるフレーム間隔  小さいほど頻繁に増える
 static final int INTERVAL_LEAVES = 10;
 //
-static final int PARTICLE_NUM = 5;
+static final int PARTICLE_NUM = 3;
 
 // Variables
 boolean bSpout = false;
@@ -65,8 +65,8 @@ void setup() {
   particles = new ArrayList<MomijiParticle>();
   images = new ArrayList<PImage>();
 
-  for(int i = 0; i < 8; i++ ){
-    PImage img = loadImage( i + ".png");
+  for(int i = 0; i < PARTICLE_NUM; i++ ){
+    PImage img = loadImage( "p_" + i + ".png");
     images.add(img);
   }
 
