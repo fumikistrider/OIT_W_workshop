@@ -21,6 +21,12 @@ void loop() {
     if( val6 == 1 ){
       Serial.write(1);
       delay(1000);
+    }else if( val4 == 1 ){
+      Serial.write(2);
+      delay(1000);
+    }else if( val2 == 1 ){
+      Serial.write(3);
+      delay(1000);
     }else{
       Serial.write(0);
     }
