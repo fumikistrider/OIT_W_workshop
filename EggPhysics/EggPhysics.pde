@@ -29,6 +29,8 @@ ArrayList<Particle> particles;
 Surface surface;
 
 PImage eggImage;
+PImage eggTitleImage;
+float titleTint;
 
 void setup() {
   size(768,1024,P3D);
@@ -47,6 +49,8 @@ void setup() {
   surface = new Surface();
   
   eggImage = loadImage("egg4.png");
+  eggTitleImage = loadImage("egg_title.png");
+  titleTint = 255;
 
   // CREATE A NEW SPOUT OBJECT
   spout = new Spout(this);
@@ -67,6 +71,10 @@ void draw() {
   box2d.step();
 
   background(0);
+
+  tint(255,titleTint);
+  image(eggTitleImage,40,0);
+  noTint();
 
   // Draw the surface
   surface.display();
@@ -118,6 +126,10 @@ void oscEvent(OscMessage theOscMessage) {
     particles = new ArrayList<Particle>();
     surface = new Surface();
   }
+  else if( theOscMessage.addrPattern().equals("/titleTint") ){
+    titleTint = theOscMessage.get(0).floatValue();
+  }
+  
   
 }
 

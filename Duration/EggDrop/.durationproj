@@ -25,6 +25,16 @@
             <sendOSC>1</sendOSC>
             <receiveOSC>1</receiveOSC>
         </track>
+        <track>
+            <type>Curves</type>
+            <xmlFileName>curves_.xml</xmlFileName>
+            <trackName>curves</trackName>
+            <displayName>titleTint</displayName>
+            <sendOSC>1</sendOSC>
+            <receiveOSC>1</receiveOSC>
+            <min>0</min>
+            <max>255</max>
+        </track>
     </page>
 </tracks>
 <timelineSettings>
@@ -37,8 +47,8 @@
 <projectSettings>
     <useBPM>0</useBPM>
     <bpm>120</bpm>
-    <snapToBPM>116</snapToBPM>
-    <snapToKeys>253</snapToKeys>
+    <snapToBPM>144</snapToBPM>
+    <snapToKeys>249</snapToKeys>
     <oscInEnabled>1</oscInEnabled>
     <oscOutEnabled>1</oscOutEnabled>
     <oscInPort>12346</oscInPort>
