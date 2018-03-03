@@ -31,10 +31,10 @@ class Surface {
       // and up on the other
       float y;
       if (x > width/2) {
-        y = height/4 + (width - x)*1.3 + map(noise(xoff),0,1,-80,80);
+        y = height/6 + (width - x)*1.1 + map(noise(xoff),0,1,-80,80);
       } 
       else {
-        y = height/4 + x*1.3 + map(noise(xoff),0,1,-80,80);
+        y = height/6 + x*1.1 + map(noise(xoff),0,1,-80,80);
       }
 
       // Store the vertex in screen coordinates
