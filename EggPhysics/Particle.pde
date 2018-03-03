@@ -49,6 +49,7 @@ class Particle {
     tint(200,200,0,255);
     imageMode(CENTER);
     image(eggImage,0,0,r*3,r*3);
+    imageMode(CORNER);
     // Let's add a line so we can see the rotation
     //line(0,0,r,0);
     popMatrix();
@@ -72,7 +73,7 @@ class Particle {
     // Parameters that affect physics
     fd.density = 1;
     fd.friction = 0.01;
-    fd.restitution = 0.3;
+    fd.restitution = 0.6;
     
     // Attach fixture to body
     body.createFixture(fd);
