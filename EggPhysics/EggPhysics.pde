@@ -107,7 +107,7 @@ void oscEvent(OscMessage theOscMessage) {
     int count = (int)random(1,second());
     for( int i = 0; i < count; i++) {
       float sz = random(10,30);
-      particles.add(new Particle(random(width),50,sz));    
+      particles.add(new Particle(random(width),random(50,100),sz));    
     }
   }
   else if( theOscMessage.addrPattern().equals("/destroy") ){
@@ -139,12 +139,16 @@ void keyPressed(){
   }
   
   if(key == 'b'){
+    particles.clear();
+
     // Initialize box2d physics and create the world
     box2d = new Box2DProcessing(this);
     box2d.createWorld();
     // We are setting a custom gravity
     box2d.setGravity(0, -2);
+    // Create the empty list
+    particles = new ArrayList<Particle>();
     surface = new Surface();
-  }
+ }
     
 }
