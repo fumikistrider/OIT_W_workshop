@@ -47,8 +47,8 @@
 <projectSettings>
     <useBPM>0</useBPM>
     <bpm>120</bpm>
-    <snapToBPM>144</snapToBPM>
-    <snapToKeys>249</snapToKeys>
+    <snapToBPM>0</snapToBPM>
+    <snapToKeys>0</snapToKeys>
     <oscInEnabled>1</oscInEnabled>
     <oscOutEnabled>1</oscOutEnabled>
     <oscInPort>12346</oscInPort>

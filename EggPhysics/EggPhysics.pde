@@ -29,8 +29,12 @@ ArrayList<Particle> particles;
 Surface surface;
 
 PImage eggImage;
+PImage eggImages[];
 PImage eggTitleImage;
 float titleTint;
+
+boolean flagDestroy = false;
+boolean flagBuild = false;
 
 void setup() {
   size(768,1024,P3D);
@@ -49,6 +53,11 @@ void setup() {
   surface = new Surface();
   
   eggImage = loadImage("egg4.png");
+  eggImages = new PImage[10];
+  for(int i = 0; i < 10; i++){
+    int num  = i + 1;
+    eggImages[i] = loadImage("egg" + num + ".png");  
+  }
   eggTitleImage = loadImage("egg_title.png");
   titleTint = 255;
 
@@ -67,9 +76,27 @@ void draw() {
     particles.add(new Particle(mouseX,mouseY,sz));
   }
     
+  if( flagDestroy ){
+    surface.destroy();
+    flagDestroy = false;
+  }
+  if( flagBuild ){
+    particles.clear();
+
+    // Initialize box2d physics and create the world
+    box2d = new Box2DProcessing(this);
+    box2d.createWorld();
+    // We are setting a custom gravity
+    box2d.setGravity(0, -2);
+    // Create the empty list
+    particles = new ArrayList<Particle>();
+    surface = new Surface();
+    flagBuild = false;
+  }
+    
   // We must always step through time!
   box2d.step();
-
+  
   background(0);
 
   tint(255,titleTint);
@@ -111,10 +138,13 @@ void oscEvent(OscMessage theOscMessage) {
     }
   }
   else if( theOscMessage.addrPattern().equals("/destroy") ){
-    surface.destroy();    
+    //surface.destroy();    
+    flagDestroy = true;
   }
   else if( theOscMessage.addrPattern().equals("/build") ){
 
+    flagBuild = true;
+    /*
     particles.clear();
 
     // Initialize box2d physics and create the world
@@ -125,6 +155,8 @@ void oscEvent(OscMessage theOscMessage) {
     // Create the empty list
     particles = new ArrayList<Particle>();
     surface = new Surface();
+    */
+    
   }
   else if( theOscMessage.addrPattern().equals("/titleTint") ){
     titleTint = theOscMessage.get(0).floatValue();
@@ -135,10 +167,11 @@ void oscEvent(OscMessage theOscMessage) {
 
 void keyPressed(){
   if(key == ' '){
-    surface.destroy();    
+    surface.destroy();
   }
   
   if(key == 'b'){
+    
     particles.clear();
 
     // Initialize box2d physics and create the world

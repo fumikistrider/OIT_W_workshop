@@ -9,11 +9,13 @@ class Particle {
   // We need to keep track of a Body and a radius
   Body body;
   float r;
+  int type;
 
   Particle(float x, float y, float r_) {
     r = r_;
     // This function puts the particle in the Box2d world
     makeBody(x,y,r);
+    type = (int)random(10);
   }
 
   // This function removes the particle from the box2d world
@@ -48,7 +50,8 @@ class Particle {
     //ellipse(0,0,r*2,r*2);
     tint(200,200,0,255);
     imageMode(CENTER);
-    image(eggImage,0,0,r*3,r*3);
+    //image(eggImage,0,0,r*3,r*3);
+    image(eggImages[type],0,0,r*3,r*3);
     imageMode(CORNER);
     // Let's add a line so we can see the rotation
     //line(0,0,r,0);
