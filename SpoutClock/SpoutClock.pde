@@ -1,3 +1,6 @@
+import netP5.*;
+import oscP5.*;
+
 import spout.*;
 
 int MARGIN = 20;
@@ -5,12 +8,31 @@ int clockWidth = 384;
 int clockHeight= 384;
 Clock myClock = new Clock();
 Spout spout;
+OscP5 oscP5;
+NetAddress locationMM;
+Table table;
 
 void setup() {
   size(640,640,P3D);
   textureMode(NORMAL);
   spout = new Spout(this);
   spout.createSender("Spout Processing");
+  
+  /* start oscP5, listening for incoming messages at port 12000 */
+  oscP5 = new OscP5(this,12000);
+  locationMM = new NetAddress("127.0.0.1", 12345); 
+
+  // load playlist
+  table = loadTable("playlist.txt", "header,csv");
+  println(table.getRowCount() + " total rows in table"); 
+  for (TableRow row : table.rows()) {
+    
+    String type = row.getString("TYPE");
+    String filename = row.getString("FILENAME");
+    int duration = row.getInt("DURATION");
+    
+    println( "TYPE:" + type + " FILENAME:" + filename + " DURATION:" + duration);    
+  }
   
   stroke(255);
   smooth();

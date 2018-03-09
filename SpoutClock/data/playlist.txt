@@ -1,0 +1,3 @@
+TYPE,FILENAME,DURATION,TARGET
+P,1_picture.png,30,no
+P,2_picture.png,15,no
